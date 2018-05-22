@@ -1,0 +1,13 @@
+Ash knows that I like palindromes a lot, so he has made a problem for me on palindromes. 
+He will give me a string S and he has asked me to generate the longest subsequence of alphabets, and numbers 
+(,i.e., one sequence for alphabets and another for numbers) and check whether they are palindrome or not.
+I am busy with my study so I am asking you to solve this problem and enjoy.
+
+import re
+n=int(input())
+new = lambda x:'Yes' if x==x[::-1] else 'No'
+for a in range(n):
+    new1=input()
+    c=''.join([i for i in new1 if i.isalpha()])
+    d=''.join([i for i in new1 if i.isdigit()])
+    print(new(c),new(d))
