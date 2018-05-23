@@ -1,0 +1,43 @@
+The columns Murder,  Assault and Rape give the number of arrests in these three categories per 100,000 people. The column UrbanPop gives the percent of the state's population that lives in urban areas; row names are the state names.
+
+Format:
+A data frame with 50 observations on 4 variables.
+
+[,1] | Murder | numeric | Murder arrests (per 100,000)
+[,2] | Assault | numeric | Assault arrests (per 100,000)
+[,3] | UrbanPop | numeric | Percent urban population
+[,4] | Rape | numeric | Rape arrests (per 100,000)
+
+Using these data, create a report of
+a. The five states with the highest Murder arrest rates 
+b. The five states with the highest Assault arrest rates 
+c. The five states with the highest total arrests (murder + assault + rape) 
+d. The five states with the lowest percentage of urban population 
+
+Bind all the above vectors in the above order of questions in a data frame and name the columns as A, B, C, D.
+
+crime<-USArrests
+library(dplyr)
+##Five States with highest Murder Rates
+
+crime$State=row.names(crime)
+
+a<-crime %>% select(State,Murder) %>% arrange(desc(Murder)) %>% head(5) %>% select(-Murder)
+
+##Five States with Highest Assault Rates
+
+b<-crime %>% select(State,Assault) %>% arrange(desc(Assault)) %>% head(5) %>% select(-Assault)
+
+##Five States with Highest Total Arrest
+
+c<-crime %>% group_by(State) %>% summarise(s=sum(Murder,Assault,Rape)) %>%arrange(desc(s)) %>% head(5) %>% select(-s)
+
+## The five states with lowest percentage of urban population
+
+d<-crime %>% select(State,UrbanPop) %>% arrange(UrbanPop) %>% head(5) %>% select(-UrbanPop)
+
+e<-cbind(a,b,c,d)
+
+colnames(e)<-c('A','B','C','D')
+
+e
